@@ -6,12 +6,19 @@ namespace buoi3_TranThuThao.Controllers
 {
     public class CategoryController : Controller
     {
-        private static List<Category> categories = new List<Category>()
+
+        private ILogger<CategoryController> _logger;
+        public CategoryController(ILogger<CategoryController> logger)
         {
-            new Models.Category { Id = 1, Name = "Category 1" },
-            new Models.Category { Id = 2, Name = "Category 2" },
-            new Models.Category { Id = 3, Name = "Category 3" }
-        };
+            _logger = logger;
+        }
+
+        public static List<Category> categories = new List<Category>()
+{
+    new Category { Id = 1, Name = "Category 1" },
+    new Category { Id = 2, Name = "Category 2" },
+    new Category { Id = 3, Name = "Category 3" }    
+};
 
         // GET: Category/Index
         public ActionResult Index()
@@ -22,6 +29,7 @@ namespace buoi3_TranThuThao.Controllers
         // GET: Category/Details/5
         public ActionResult Details(int id)
         {
+            _logger.LogInformation($"Fetching details for category with ID: {id}");
             var category = categories.FirstOrDefault(c => c.Id == id);
             if (category == null)
             {
